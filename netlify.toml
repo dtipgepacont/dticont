@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[dev]
+  functions = "netlify/functions"
+
+[functions]
+  directory = "netlify/functions"
+
+[template.environment]
+GOOGLE_SERVICE_ACCOUNT = ""
+GOOGLE_SHEET_ID = ""
