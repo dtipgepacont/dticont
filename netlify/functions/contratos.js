@@ -18,16 +18,34 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // Carregar credenciais do ambiente
-    const serviceAccount = JSON.parse(Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT, 'base64').toString('utf8'));
-    const sheetId = process.env.GOOGLE_SHEET_ID;
-
-    if (!serviceAccount || !sheetId) {
-      console.error('Credenciais não encontradas:', { 
+    // Validar presença das variáveis de ambiente
+    if (!process.env.GOOGLE_SERVICE_ACCOUNT || !process.env.GOOGLE_SHEET_ID) {
+      console.error('Variáveis de ambiente não encontradas:', {
         hasServiceAccount: !!process.env.GOOGLE_SERVICE_ACCOUNT,
-        hasSheetId: !!process.env.GOOGLE_SHEET_ID 
+        hasSheetId: !!process.env.GOOGLE_SHEET_ID
       });
       throw new Error('Credenciais do Google Sheets não configuradas');
+    }
+
+    let serviceAccount;
+    try {
+      // Decodificar e fazer parse do JSON das credenciais
+      const decodedCredentials = Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT, 'base64').toString('utf8');
+      serviceAccount = JSON.parse(decodedCredentials);
+      
+      // Validar campos obrigatórios das credenciais
+      const requiredFields = ['client_email', 'private_key', 'project_id'];
+      const missingFields = requiredFields.filter(field => !serviceAccount[field]);
+      
+      if (missingFields.length > 0) {
+        throw new Error(`Campos obrigatórios ausentes nas credenciais: ${missingFields.join(', ')}`);
+      }
+    } catch (parseError) {
+      console.error('Erro ao processar credenciais:', parseError);
+      throw new Error('Credenciais do Google Service Account inválidas');
+    }
+
+    const sheetId = process.env.GOOGLE_SHEET_ID;
     }
 
     const auth = new google.auth.GoogleAuth({
