@@ -8,13 +8,13 @@
     "start": "vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^5.0.4",
+    "@vitejs/plugin-react": "^4.2.1",
     "googleapis": "^162.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
-    "vite": "^7.1.10"
+    "vite": "^4.5.1"
   }
 }
