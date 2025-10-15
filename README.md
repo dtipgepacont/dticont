@@ -49,10 +49,42 @@ Após configurar as variáveis, o deploy funcionará normalmente e o sistema ter
 - `src/` - Frontend React
 - `netlify/functions/` - Funções serverless para CRUD
 
+## Estrutura da Planilha Google Sheets
+
+A planilha deve conter três abas específicas com as seguintes estruturas:
+
+### Aba "Fiscais"
+Colunas necessárias:
+- Nome
+- Matrícula
+- Email
+- Status (Ativo/Inativo)
+
+### Aba "Empresas"
+Colunas necessárias:
+- Razão Social
+- CNPJ
+- Contato
+- Email
+- Telefone
+- Status (Ativa/Inativa)
+
+### Aba "Contratos"
+Colunas necessárias:
+- Número do Contrato
+- Empresa (deve corresponder a uma empresa cadastrada)
+- Fiscal (deve corresponder a um fiscal cadastrado)
+- Data de Início
+- Data de Término
+- Valor
+- Status (Ativo/Encerrado/Em Renovação)
+
 ## Funcionalidades
-- Menu principal
-- CRUD para Fiscais, Empresas, Contratos
-- Listagem dos registros de cada tabela
+- Menu principal com navegação SPA
+- CRUD completo para Fiscais, Empresas e Contratos
+- Listagem dos registros de cada tabela com filtros
+- Validações de dados antes do envio
+- Integração em tempo real com Google Sheets
 
 ---
 
